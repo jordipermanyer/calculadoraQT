@@ -1,0 +1,42 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/AC_black.png</file>
+        <file>icons/AC_white.png</file>
+        <file>icons/closePar_black.png</file>
+        <file>icons/closePar_white.png</file>
+        <file>icons/div_black.png</file>
+        <file>icons/div_white.png</file>
+        <file>icons/dot_black.png</file>
+        <file>icons/dot_white.png</file>
+        <file>icons/eight_black.png</file>
+        <file>icons/eight_white.png</file>
+        <file>icons/equals_black.png</file>
+        <file>icons/equals_white.png</file>
+        <file>icons/five_black.png</file>
+        <file>icons/five_white.png</file>
+        <file>icons/four_black.png</file>
+        <file>icons/four_white.png</file>
+        <file>icons/minus_black.png</file>
+        <file>icons/minus_white.png</file>
+        <file>icons/mult_black.png</file>
+        <file>icons/mult_white.png</file>
+        <file>icons/nine_black.png</file>
+        <file>icons/nine_white.png</file>
+        <file>icons/one_black.png</file>
+        <file>icons/one_white.png</file>
+        <file>icons/openPar_black.png</file>
+        <file>icons/openPar_white.png</file>
+        <file>icons/plus_black.png</file>
+        <file>icons/plus_white.png</file>
+        <file>icons/seven_black.png</file>
+        <file>icons/seven_white.png</file>
+        <file>icons/six_black.png</file>
+        <file>icons/six_white.png</file>
+        <file>icons/three_black.png</file>
+        <file>icons/three_white.png</file>
+        <file>icons/two_white.png</file>
+        <file>icons/two-black.png</file>
+        <file>icons/zero_white.png</file>
+        <file>icons/zero-black.png</file>
+    </qresource>
+</RCC>
