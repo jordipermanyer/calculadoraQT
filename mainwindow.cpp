@@ -55,6 +55,7 @@ void MainWindow::nombre ()
 {
     if(UltimIgual){ //Volem sobrescriure el text en cas de que es comenci nova equacio
         ui->visor->setText("");
+        ui->visor2->setText("");
         UltimIgual = false;
     }
     //Ens guardem quin ha sigut el boto clicat i imprimim el seu valor en el objecte visor (el concatenem '+', volem que s'afegeixi no sobreposar)
@@ -64,7 +65,7 @@ void MainWindow::nombre ()
         coma();
     }
     if(text=="X"){ text="*"; }
-    ui->visor->setText(ui->visor->toPlainText() + obj->text());
+    ui->visor2->setText(ui->visor2->toPlainText() + obj->text());
     if(EquaActual != "nan"){
        EquaActual=EquaActual+text.toStdString();
     }
@@ -84,7 +85,9 @@ void MainWindow::coma ()
 
 void MainWindow::eliminar ()
 {
-    ui->visor->setText("0");
+    ui->visor->setText("");
+    ui->visor2->setText("0");
+    //Eliminar equacio a dalt
     UltimIgual=true;
     EquaActual="";
 }
@@ -92,12 +95,14 @@ void MainWindow::eliminar ()
 void MainWindow::calcular ()
 {
     const char *StringCalcular = EquaActual.c_str();
+    QString EquaAdalt = QString::fromStdString(EquaActual);
+    ui->visor->setText(EquaAdalt); //Un cop fet el calcul posarem en el vsior d'adalt la equacio i en el d'abaix el resultat
     double resultat = te_interp(StringCalcular, 0);
     QString resultatStr = QString::number(resultat); //Transformem el double a Qstring
     if(resultatStr=="nan"){
         resultatStr="Error";
     }
-    ui->visor->setText(resultatStr);
+    ui->visor2->setText(resultatStr); //Imprimir equacio abaix
     EquaActual="";
     UltimIgual=true;
 }
