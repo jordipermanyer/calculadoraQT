@@ -4,7 +4,8 @@
 #include <iostream>
 
 std::string EquaActual="";
-bool UltimIgual=false;
+bool UltimIgual=true;
+bool EqValid=true;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -33,39 +34,26 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonAC, SIGNAL(clicked()), this, SLOT(eliminar()));
     connect(ui->buttonIgual, SIGNAL(clicked()), this, SLOT(calcular()));
 
-    //visualitzacio dreta-esquerra
-    /*
-    ui->visor->setLayoutDirection(Qt::RightToLeft);
-
-    // aligned to the right
-    Text {
-        text: "خامل"
-        horizontalAlignment: Text.AlignLeft
-        LayoutMirroring.enabled: true
-        width: 200
-    }
-    */
-    /*ui->visor->setStyleSheet("horizontalAlignment: Text.AlignLeft");
-    ui->visor->setStyleSheet("LayoutMirroring.enabled: true");
-    ui->visor->setStyleSheet("text-align: right;");*/
-
 }
 
 void MainWindow::nombre ()
 {
-    if(UltimIgual){ //Volem sobrescriure el text en cas de que es comenci nova equacio
+    if(UltimIgual){
         ui->visor->setText("");
-        ui->visor2->setText("");
         UltimIgual = false;
     }
-    //Ens guardem quin ha sigut el boto clicat i imprimim el seu valor en el objecte visor (el concatenem '+', volem que s'afegeixi no sobreposar)
     QPushButton* obj = (QPushButton*) sender();
     QString text = obj->text();
     if(text=="."){
         coma();
     }
     if(text=="X"){ text="*"; }
-    ui->visor2->setText(ui->visor2->toPlainText() + obj->text());
+    if(EquaActual.length()>10){
+        ui->visor->setText("..." + ui->visor->text());
+    }
+    else{
+        ui->visor->setText(ui->visor->text() + obj->text());
+    }
     if(EquaActual != "nan"){
        EquaActual=EquaActual+text.toStdString();
     }
@@ -79,14 +67,13 @@ void MainWindow::coma ()
     }
     // La equacio .3+2.3 és invalida ja que . ha d'anar seguit d'un numero, això ho mirem aquí
     if((EquaActual=="") || (ultimVal=='+')|| (ultimVal=='-')|| (ultimVal=='*')|| (ultimVal=='/')){
-        EquaActual="nan";
+        EqValid=false;
     }
 }
 
 void MainWindow::eliminar ()
 {
-    ui->visor->setText("");
-    ui->visor2->setText("0");
+    ui->visor->setText("0");
     //Eliminar equacio a dalt
     UltimIgual=true;
     EquaActual="";
@@ -95,14 +82,15 @@ void MainWindow::eliminar ()
 void MainWindow::calcular ()
 {
     const char *StringCalcular = EquaActual.c_str();
-    QString EquaAdalt = QString::fromStdString(EquaActual);
-    ui->visor->setText(EquaAdalt); //Un cop fet el calcul posarem en el vsior d'adalt la equacio i en el d'abaix el resultat
+    QString qstr = QString::fromStdString(EquaActual);
+    ui->visor->setText(qstr+" = "+"\n");
     double resultat = te_interp(StringCalcular, 0);
-    QString resultatStr = QString::number(resultat); //Transformem el double a Qstring
-    if(resultatStr=="nan"){
+    QString resultatStr = QString::number(resultat);
+    if(resultatStr=="nan" || EqValid==false){
         resultatStr="Error";
+        EqValid=true;
     }
-    ui->visor2->setText(resultatStr); //Imprimir equacio abaix
+    ui->visor->setText(ui->visor->text()+resultatStr);
     EquaActual="";
     UltimIgual=true;
 }
